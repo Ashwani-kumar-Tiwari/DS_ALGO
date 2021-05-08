@@ -14,7 +14,7 @@ public class climbStair {
         return count;
     }
 
-    //using memorization
+    //using memoisation
     public static int climbStairs_memo(int i, int n, int[] dp){
         //if(i == n) return dp[i] = 1;
         
