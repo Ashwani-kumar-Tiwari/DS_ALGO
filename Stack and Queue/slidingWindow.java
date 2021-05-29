@@ -8,30 +8,66 @@
 // for k = 4, 
 // the answer is [9 9 8 12 12 14 14 32 32 32 32 19 19 19]
 
+import java.util.Stack;
+
 public class slidingWindow {
     
+    //my solution
+    // public static void slidingWindowMaximum(int[] arr, int k){
+    //     int[] res = new int[arr.length - 3];
+    //     int max = Integer.MIN_VALUE;
 
-    public static void slidingWindowMaximum(int[] arr){
-        int[] res = new int[arr.length - 3];
-        int max = Integer.MIN_VALUE;
+    //     for(int i = 0; i< arr.length - 3; i++){
+    //         for(int j = i; j < k + i; j++){
+    //             if(arr[j] > max){
+    //                 max = arr[j];
+    //             }
+    //         }
+    //         res[i] = max;
+    //         max = Integer.MIN_VALUE;
+    //     }
 
-        for(int i = 0; i< arr.length - 3; i++){
-            for(int j = i; j < 4 + i; j++){
-                if(arr[j] > max){
-                    max = arr[j];
-                }
+    //     for(int i = 0; i < res.length; i++){
+    //         System.out.print(res[i] + " ");
+    //     }
+    // }
+
+    public static int[] ngiForSlidingWindow(int[] arr){
+        Stack<Integer> st = new Stack<>();
+        st.push(0);
+        int[] res = new int[arr.length];
+        for(int i = 1; i < arr.length; i++){
+            while(st.size() > 0 && arr[st.peek()] < arr[i]) {
+                res[st.pop()] = i;
             }
-            res[i] = max;
-            max = Integer.MIN_VALUE;
+            st.push(i);
         }
 
-        for(int i = 0; i < res.length; i++){
-            System.out.print(res[i] + "\t");
+        while(st.size() > 0){
+            res[st.pop()] = arr.length;
+        }
+
+        return res;
+    }
+
+    public static void slidingWindowMaximum(int[] arr, int k){
+        int[] ngri = ngiForSlidingWindow(arr);
+
+        int j = 0;
+        for(int i = 0; i <= arr.length - k; i++){
+            if(j < i){
+                j = i;
+            }
+            while(i + k > ngri[j]){
+                j = ngri[j];
+            }
+            System.out.println(arr[j]);
         }
     }
 
     public static void main(String[] args){
         int[] arr = {2, 9, 3, 8, 1, 7, 12, 6, 14, 4, 32, 0, 7, 19, 8, 12, 6};
-        slidingWindowMaximum(arr);
+        int k = 4;
+        slidingWindowMaximum(arr, k);
     }
 }
