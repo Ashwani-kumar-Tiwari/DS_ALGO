@@ -18,46 +18,33 @@ public class queueToStackPop {
         }
     
         void push(int val) {
+            while(mainQ.size() > 0){
+              helperQ.add(mainQ.remove());
+            }
+
             mainQ.add(val);
+
+            while(helperQ.size() > 0){
+              mainQ.add(helperQ.remove());
+            }
         }
     
         int pop() {
             if(mainQ.size() == 0){
                 System.out.println("Stack underflow");
                 return -1;
+            } else {
+                return mainQ.remove();
             }
-            // move values from mainQ to helperQ
-            while(mainQ.size() > 1){
-                helperQ.add(mainQ.remove());
-            }
-  
-            int data = mainQ.remove();
-            //swap helperQ and mainQ references
-            Queue<Integer> temp = mainQ;
-            mainQ = helperQ;
-            helperQ = temp;
-  
-            return data;
         }
     
         int top() {
             if(mainQ.size() == 0){
                 System.out.println("Stack underflow");
                 return -1;
+            } else {
+                return mainQ.peek();
             }
-            // move values from mainQ to helperQ
-            while(mainQ.size() > 1){
-                helperQ.add(mainQ.remove());
-            }
-
-            int data = mainQ.remove();
-            helperQ.add(data);
-            //swap helperQ and mainQ references
-            Queue<Integer> temp = mainQ;
-            mainQ = helperQ;
-            helperQ = temp;
-
-            return data;
         }
       }
     
