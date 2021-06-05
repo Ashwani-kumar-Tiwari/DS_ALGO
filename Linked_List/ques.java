@@ -279,7 +279,7 @@ class linkedLists{
 
     public static linkedLists mergeTwoSortedLists(linkedLists l1, linkedLists l2) {
         // write your code hered
-        linkedLists res = new  linkedLists();
+        linkedLists merged = new  linkedLists();
 
         Node p1 = l1.head;
         Node p2 = l2.head;
@@ -289,30 +289,31 @@ class linkedLists{
             int val2 = p2.data;
 
             if(val1 < val2){
-                res.addLast(val1);
+                merged.addLast(val1);
                 p1 = p1.next;
             } else {
-                res.addLast(val2);
+                merged.addLast(val2);
                 p2 = p2.next;
             }
         }
 
         while(p1 != null){
-            p1.addLast(p1.data);
+            merged.addLast(p1.data);
             p1 = p1.next;
         }
 
         while(p2 != null){
-            p2.addLast(p2.data);
+            merged.addLast(p2.data);
             p2 = p2.next;
         }
-        return res;
+        return merged;
     }
 }
       public class ques{
       public static void main(String[] args) throws Exception {
         linkedLists list1 = new  linkedLists();
         linkedLists list2 = new  linkedLists();
+        linkedLists res = new  linkedLists();
         list1.addLast(10);
         list1.addLast(20);
         list1.addLast(30);
@@ -334,7 +335,7 @@ class linkedLists{
         // System.out.println(list.kthFromLast(3)); //Kth Node From End Of Linked List
         // System.out.println(list.mid1()); //Mid Of Linked List
         // System.out.println(list.mid2()); //Mid Of Linked List
-        linkedLists res = mergeTwoSortedLists(list1, list2);
+        res = linkedLists.mergeTwoSortedLists(list1, list2);
         System.out.println(list1 + "\n" + list1.size());
         System.out.println(list2 + "\n" + list2.size());
         System.out.println(res + "\n" + res.size());
