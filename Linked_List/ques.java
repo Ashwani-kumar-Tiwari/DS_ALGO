@@ -395,6 +395,39 @@ class linkedLists{
         this.head = ohead.next;
         this.tail = t2 == ehead ? t1 :t2;
     }
+
+    public void kReverse(int k) {
+        // write your code here
+        linkedLists prev = null;
+
+        while(this.size() > 0){
+            linkedLists curr = new linkedLists();
+            if(this.size() >= k) {
+                //remove first form list and add first in curr
+                for(int i = 0; i < k; i++){
+                    int data = this.getFirst();
+                    this.removeFirst();
+                    curr.addFirst(data);
+                }
+            } else {
+                //remove first in list and add last in curr
+                int sz = this.size;
+                for(int i = 0; i < sz; i++){
+                    int data = this.getFirst();
+                    this.removeFirst();
+                    curr.addFirst(data);
+                }
+            }
+
+            if(prev == null){
+                prev = curr;
+            } else{
+                prev.tail.next = curr.head;
+                prev.tail = curr.tail;
+                prev.size += curr.size;
+            }
+        }
+    }
 }
       public class ques{
       public static void main(String[] args) throws Exception {
