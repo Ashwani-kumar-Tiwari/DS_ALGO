@@ -432,46 +432,118 @@ class linkedLists{
         this.head = prev.head;
         this.tail = prev.tail;
     }
+
+    private void displayReverseHelper(Node node){
+        // write your code here
+
+        if(node == null) return;
+
+        displayReverseHelper(node.next);
+        System.out.print(node.data + " ");
+    }
+  
+    public void displayReverse(){
+        displayReverseHelper(head);
+        System.out.println();
+    }
+
+    private void reversePRHelper(Node node){
+        // write your code here
+        if(node == null) return;
+
+        reversePRHelper(node.next);
+
+        if(node == tail){
+            //nothing to add
+        } else {
+            node.next.next = node;
+        }
+      }
+  
+    public void reversePR(){
+        // write your code here
+        reversePRHelper(head);
+        head.next = null;
+        Node temp = head;
+        head = tail;
+        tail = temp;
+    }
+
+    public static int addListHelper(Node one, int pv1, Node two, int pv2, linkedLists res){
+        //pv -> place value
+        //oc = old carry
+        //nd = new data
+        //nc = new carry
+
+        if(one == null && two == null) return 0;
+
+        int data = 0;
+        if(pv1 > pv2){
+            int oc = addListHelper(one.next, pv1 - 1, two, pv2, res);
+            data = one.data + oc;
+        } else if(pv1 < pv2){
+            int oc = addListHelper(one, pv1, two.next, pv2 - 1, res);
+            data = two.data + oc;
+        } else {
+            int oc = addListHelper(one.next, pv1 - 1, two.next, pv2 - 1, res);
+            data = one.data + two.data + oc;
+        }
+        int nd = data % 10;
+        int nc = data / 10;
+
+        res.addFirst(nd);
+        return nc;
+    }
+
+    public static linkedLists addTwoLists(linkedLists one, linkedLists two) {
+        // write your code here
+        linkedLists res = new linkedLists();
+
+        int oc = addListHelper(one.head, one.size, two.head, two.size, res);
+        if(oc > 0){
+            res.addFirst(oc);
+        }
+        return res;
+    }
 }
       public class ques{
       public static void main(String[] args) throws Exception {
         linkedLists list1 = new  linkedLists();
         linkedLists list2 = new  linkedLists();
-        //linkedLists res = new  linkedLists();
-        list1.addLast(10);
+        linkedLists res = new  linkedLists();
         list1.addLast(2);
         list1.addLast(2);
         list1.addLast(5);
         list1.addLast(3);
-        list1.addLast(30);
-        list1.addLast(14);
-        list1.addLast(14);
-        list1.addLast(25);
-        list1.addLast(25);
         list1.addLast(6);
-        list1.addLast(6);
+        list1.addLast(1);
+        list1.addLast(7);
         list1.addLast(9);
         
-        list2.addLast(15);
-        list2.addLast(25);
-        list2.addLast(35);
-        list2.addLast(45);
-        list2.addLast(55);
-        list2.addLast(65);
-        list2.addLast(75);
-        // System.out.println(list + "\n" + list.size());
+        list2.addLast(5);
+        list2.addLast(2);
+        list2.addLast(3);
+        list2.addLast(5);
+        list2.addLast(8);
+        list2.addLast(7);
+        // System.out.println(list1.getFirst());
         // list.reverseDI(); //Reverse A Linked List (data Iterative)
         // list.reversePI(); //Reverse Linked List (pointer Iterative)
         // System.out.println(list.kthFromLast(3)); //Kth Node From End Of Linked List
         // System.out.println(list.mid1()); //Mid Of Linked List
         // System.out.println(list.mid2()); //Mid Of Linked List
-        //res = linkedLists.mergeTwoSortedLists(list1, list2); //Merge Two Sorted Linked Lists
-        //res = linkedLists.mergeSort(list1.head, list1.tail); //Merge Sort A Linked List
-        //System.out.println(list2 + "\n" + list2.size());
-        //System.out.println(res + "\n" + res.size());
-        //list1.removeDuplicates(); // Remove Duplicates In A Linked List
-        System.out.println(list1 + "\n" + list1.size());
-        list1.oddEven(); //Odd Even Linked List
-        System.out.println(list1 + "\n" + list1.size());
+        // res = linkedLists.mergeTwoSortedLists(list1, list2); //Merge Two Sorted Linked Lists
+        // res = linkedLists.mergeSort(list1.head, list1.tail); //Merge Sort A Linked List
+        // System.out.println(list2 + "\n" + list2.size());
+        // System.out.println(res + "\n" + res.size());
+        // list1.removeDuplicates(); // Remove Duplicates In A Linked List
+        // list1.oddEven(); //Odd Even Linked List
+        // list1.kReverse(3); // K Reverse In Linked List
+        // list1.displayReverse(); //Display Reverse (recursive) - Linked List
+        // list1.reversePR(); //Reverse Linked List (pointer - Recursive)
+        System.out.println(list1);
+        System.out.println(list2);
+        res = linkedLists.addTwoLists(list1, list2); //Add Two Linked Lists
+        System.out.println(res);
       }
 }
