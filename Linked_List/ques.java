@@ -19,8 +19,8 @@ class linkedLists{
         }
     }
 
-    private Node head = null;
-    private Node tail = null;
+    Node head = null;
+    Node tail = null;
     private int size = 0;
 
     private void handleAddWhenSize0(int data){
@@ -308,19 +308,112 @@ class linkedLists{
         }
         return merged;
     }
+
+    public static Node getMidNode(Node lo, Node hi){
+        Node slow = lo;
+        Node fast = lo.next;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public static linkedLists mergeSort(Node lo, Node hi){
+        // write your code here
+        if(lo == hi){
+            linkedLists bres = new linkedLists();
+            bres.addFirst(lo.data);
+            return bres;
+        }
+        
+        //step 1. get mid node and break the connection of middle
+        Node mid = getMidNode(lo, hi);
+        Node midNext = mid.next;
+        mid.next = null;
+
+        linkedLists l1 = mergeSort(lo, mid);
+        linkedLists l2 = mergeSort(midNext, hi);
+
+        linkedLists res = mergeTwoSortedLists(l1, l2);
+        
+        // step 2. make the connection of mid
+        mid.next = midNext;
+        return res;
+      }
+
+    public void removeDuplicates(){
+        // write your code here
+        Node prev = this.head;
+        Node next = prev.next;
+
+        while( next != null){
+            if(prev.data == next.data){
+                next = next.next;
+            } else {
+                prev.next = next;
+                prev = next;
+                next = next.next;
+            }
+        }
+
+        prev.next = null;
+
+        //set original head and tail
+        this.tail = prev;
+    }
+
+    public void oddEven(){
+        // write your code here
+        Node ohead = new Node(); // odd ka head
+        Node ehead = new Node();// even ka head
+
+        Node t1 = ohead;
+        Node t2 = ehead;
+
+        Node i = this.head;
+
+        while(i != null){
+            if(i.data % 2 == 0){
+                //even
+                t2.next = i;
+                t2 = i;
+            } else {
+                //odd
+                t1.next = i;
+                t1 = i;
+            }
+            i = i.next;
+        }
+
+        //odd -> even
+        t1.next = ehead.next;
+        t2.next = null;
+
+        this.head = ohead.next;
+        this.tail = t2 == ehead ? t1 :t2;
+    }
 }
       public class ques{
       public static void main(String[] args) throws Exception {
         linkedLists list1 = new  linkedLists();
         linkedLists list2 = new  linkedLists();
-        linkedLists res = new  linkedLists();
+        //linkedLists res = new  linkedLists();
         list1.addLast(10);
-        list1.addLast(20);
+        list1.addLast(2);
+        list1.addLast(2);
+        list1.addLast(5);
+        list1.addLast(3);
         list1.addLast(30);
-        list1.addLast(40);
-        list1.addLast(50);
-        list1.addLast(60);
-        list1.addLast(70);
+        list1.addLast(14);
+        list1.addLast(14);
+        list1.addLast(25);
+        list1.addLast(25);
+        list1.addLast(6);
+        list1.addLast(6);
+        list1.addLast(9);
         
         list2.addLast(15);
         list2.addLast(25);
@@ -335,9 +428,13 @@ class linkedLists{
         // System.out.println(list.kthFromLast(3)); //Kth Node From End Of Linked List
         // System.out.println(list.mid1()); //Mid Of Linked List
         // System.out.println(list.mid2()); //Mid Of Linked List
-        res = linkedLists.mergeTwoSortedLists(list1, list2);
+        //res = linkedLists.mergeTwoSortedLists(list1, list2); //Merge Two Sorted Linked Lists
+        //res = linkedLists.mergeSort(list1.head, list1.tail); //Merge Sort A Linked List
+        //System.out.println(list2 + "\n" + list2.size());
+        //System.out.println(res + "\n" + res.size());
+        //list1.removeDuplicates(); // Remove Duplicates In A Linked List
         System.out.println(list1 + "\n" + list1.size());
-        System.out.println(list2 + "\n" + list2.size());
-        System.out.println(res + "\n" + res.size());
+        list1.oddEven(); //Odd Even Linked List
+        System.out.println(list1 + "\n" + list1.size());
       }
 }
