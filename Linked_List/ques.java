@@ -411,11 +411,11 @@ class linkedLists{
                 }
             } else {
                 //remove first in list and add last in curr
-                int sz = this.size;
+                int sz = this.size();
                 for(int i = 0; i < sz; i++){
                     int data = this.getFirst();
                     this.removeFirst();
-                    curr.addFirst(data);
+                    curr.addLast(data);
                 }
             }
 
@@ -427,6 +427,10 @@ class linkedLists{
                 prev.size += curr.size;
             }
         }
+
+        this.size = prev.size;
+        this.head = prev.head;
+        this.tail = prev.tail;
     }
 }
       public class ques{

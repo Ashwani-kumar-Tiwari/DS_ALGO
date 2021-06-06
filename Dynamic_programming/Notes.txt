@@ -1,7 +1,0 @@
-Dynamic Programming :- sacrifice with space and save massive time and to solve repetited problems.
-
-Tabulation :-
-    1. Make Storage.
-    2. Assign meaning to cell -> dp[i] have fib(i) i.e. dp[i] = dp[i-1] + dp[i-2]
-    3. Identify traversal(smallest problem to larget problem) of problem.
-    4. Set prerequisite in DP(Dynamic Programming).
