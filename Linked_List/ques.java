@@ -505,27 +505,143 @@ class linkedLists{
         }
         return res;
     }
+
+    public Node getMiddle(Node node){
+        Node slow = node;
+        Node fast = node.next;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public Node reverseNode(Node node){
+        Node prev = null;
+        Node curr = node;
+
+        while(curr != null){
+            Node next = curr.next;
+
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+    
+    public boolean IsPalindrome() {
+        // write your code here
+        //1. get mid node
+        Node mid = getMiddle(head);
+
+        //2. make head2
+        Node head2 = mid.next;
+        mid.next = null;
+
+        //3.revrse head2
+        head2 = reverseNode(head2);
+
+        //4.check for palindrome
+        Node p1 = head;
+        Node p2 = head2;
+
+        boolean is_palindrome = true;
+
+        while(p1 != null && p2 != null){
+            if(p1.data != p2.data){
+                is_palindrome = false;
+                break;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+
+        }
+
+        //5.maintain original list
+        head2 = reverseNode(head2);
+        mid.next = head2;
+
+        return is_palindrome;
+    }
+    
+    public void fold() {
+        // write your code here
+        if(head == null || head.next == null || head.next.next == null) return;
+        //1. get mid node
+        Node mid = getMiddle(head);
+
+        //2. make head2
+        Node head2 = mid.next;
+        mid.next = null;
+
+        //3.revrse head2
+        head2 = reverseNode(head2);
+
+        //4.make connection
+        Node p1 = head;;
+        Node p2 = head2;
+
+        Node prev = head;
+        while(p1 != null && p2 != null){
+            Node n1 = p1.next;
+            Node n2 = p2.next;
+            p1.next = p2;
+            p2.next = n1;
+            p1 = n1;
+            p2 = n2;
+
+            if(p1 != null) prev = p1;
+            if(p2 != null) prev = p2;
+        } 
+
+        //4. manage head and tail
+        this.tail = prev;  
+    }
+
+    public static int findIntersection(linkedLists one, linkedLists two){
+        // write your code here
+        Node t1 = one.head;
+        Node t2 = two.head;
+
+        int delta = Math.abs(one.size - two.size);
+        if(one.size > two.size){
+            for(int i = 0; i < delta; i++){
+                t1 = t1.next;
+            }
+        } else {
+            for(int i = 0; i < delta; i++){
+                t2 = t2.next;
+            }
+        }
+
+        while(t1 != t2){
+            t1 = t1.next;
+            t2 = t2.next;
+        }
+
+        return t1.data;
+      }
 }
       public class ques{
       public static void main(String[] args) throws Exception {
         linkedLists list1 = new  linkedLists();
-        linkedLists list2 = new  linkedLists();
-        linkedLists res = new  linkedLists();
-        list1.addLast(2);
-        list1.addLast(2);
-        list1.addLast(5);
-        list1.addLast(3);
-        list1.addLast(6);
+        // linkedLists list2 = new  linkedLists();
+        // linkedLists res = new  linkedLists();
         list1.addLast(1);
-        list1.addLast(7);
-        list1.addLast(9);
+        list1.addLast(2);
+        list1.addLast(3);
+        list1.addLast(4);
         
-        list2.addLast(5);
-        list2.addLast(2);
-        list2.addLast(3);
-        list2.addLast(5);
-        list2.addLast(8);
-        list2.addLast(7);
+        // list2.addLast(5);
+        // list2.addLast(2);
+        // list2.addLast(3);
+        // list2.addLast(5);
+        // list2.addLast(8);
+        // list2.addLast(7);
         // System.out.println(list1.getFirst());
         // list.reverseDI(); //Reverse A Linked List (data Iterative)
         // list.reversePI(); //Reverse Linked List (pointer Iterative)
@@ -541,9 +657,11 @@ class linkedLists{
         // list1.kReverse(3); // K Reverse In Linked List
         // list1.displayReverse(); //Display Reverse (recursive) - Linked List
         // list1.reversePR(); //Reverse Linked List (pointer - Recursive)
+        // System.out.println(list2);
+        // res = linkedLists.addTwoLists(list1, list2); //Add Two Linked Lists
+        // System.out.println(res);
+        // boolean res = list1.IsPalindrome(); //Is Linked List A Palindrome?
+        list1.fold();//Fold A Linked List
         System.out.println(list1);
-        System.out.println(list2);
-        res = linkedLists.addTwoLists(list1, list2); //Add Two Linked Lists
-        System.out.println(res);
       }
 }
